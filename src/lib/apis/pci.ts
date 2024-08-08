@@ -96,7 +96,7 @@ async function createHeaders(key: string, secret: string) {
   const input = key+secret+Math.floor(Date.now() / 1000);
   console.log("input: "+input);
   const data = new TextEncoder().encode(input);
-  const hashBuffer = await crypto.subtle.digest("SHA-1", data);
+  const hashBuffer = await window.crypto.subtle.digest("SHA-1", data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
   
