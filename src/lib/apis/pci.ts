@@ -92,26 +92,29 @@ const baseUrl = "https://api.podcastindex.org/api/1.0/";
 
 
 async function createHeaders(key: string, secret: string) {
-  
+  console.log("createHeaders(): key:", key);
+  console.log("createHeaders(): secret:", secret);
+
   const input = key+secret+Math.floor(Date.now() / 1000);
-  console.log("input: "+input);
+  console.log("input:", input);
   const data = new TextEncoder().encode(input);
+  console.log("Attempting to create hash from data:", data);
   const hashBuffer = await window.crypto.subtle.digest("SHA-1", data);
+  console.log("hashBuffer:", hashBuffer);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
   const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-  
-  const userAgent = USER_AGENT || "default-user-agent"; // not able to set in browser
-  
-  console.log("input: "+input);
-  console.log("hash: "+hashHex);
-  
-  
-  
+  const userAgent = USER_AGENT || "default-user-agent"; 
+    
+  console.log("X-Auth-Date:", Math.floor(Date.now() / 1000).toString());
+  console.log("X-Auth-Key:", key);
+  console.log("Authorization:", hashHex);
+  console.log("User-Agent:", userAgent);
+
   return {
     "X-Auth-Date": Math.floor(Date.now() / 1000).toString(),
     "X-Auth-Key": key,
     Authorization: hashHex,
-    // "User-Agent": userAgent,
+    "User-Agent": userAgent,
   };
 }
 
