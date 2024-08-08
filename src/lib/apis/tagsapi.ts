@@ -3,7 +3,7 @@ const baseUrl = "http://tags.v4vmusic.com:3001/"
 //http://tags.v4vmusic.com:3001/items/byGuid/05b75483-9f5b-5236-bd66-69e9d3e1b995/c372c998-bbec-47fb-b266-f178dce6aba4
 
 export async function getAllTags(): Promise<string[]> {
-    const endpoint = "http://tags.v4vmusic.com:3001/tags";
+    const endpoint = "https://tags.v4vmusic.com/tags";
     const response = await fetch(endpoint, { mode: "cors" });
     const data = await response.json();
     return data
