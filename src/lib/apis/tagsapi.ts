@@ -1,5 +1,5 @@
 import axios, { type AxiosResponse } from "axios";
-const baseUrl = "http://tags.v4vmusic.com:3001/"
+const baseUrl = "https://tags.v4vmusic.com/"
 //http://tags.v4vmusic.com:3001/items/byGuid/05b75483-9f5b-5236-bd66-69e9d3e1b995/c372c998-bbec-47fb-b266-f178dce6aba4
 
 export async function getAllTags(): Promise<string[]> {
