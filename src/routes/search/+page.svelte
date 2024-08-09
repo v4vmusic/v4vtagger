@@ -5,7 +5,7 @@
     import SongsView from '$lib/SongsView.svelte';
     import { onMount } from "svelte";
 
-    let searchTerm = "Prismind";
+    let searchTerm = "Doerfel";
     let albums: Feed[] = [];
     let album : Feed = {};
     let loadImages: boolean = false;
@@ -36,7 +36,7 @@
 <div id="search-box">
     <h1>Search Album or Artist</h1>
     <input type="text" placeholder="Search" bind:value={searchTerm} on:keyup={e=>e.key==='Enter' && searchAlbums(searchTerm)} id="tfSearch"/>
-    <button on:click={() => searchAlbums(searchTerm)}>Search</button>
+    <button on:click={() => searchAlbums(searchTerm)}>Search</button><br>
     Load Images <input type="checkbox" name="loadImages" id="" bind:checked={loadImages}>
 </div>
 

@@ -1,7 +1,7 @@
 <script lang=ts>
     import { currentSongs } from "./stores.ts";
     import TagsView from '$lib/tagsView.svelte';
-    import { getAcronym } from "$lib/utils/utils";
+    import { getAcronym, getFirstWordsAndAcronym } from "$lib/utils/utils";
 
     let loadImages: boolean = false;
 </script>
@@ -16,7 +16,7 @@
                     <img src="{song.imageURL}" width="50px" alt="">
                 {/if}
                 <a href="https://lnbeats.com/album/{song.feedGuid}" target="_blank" title="{song.artistName} - {song.title}">
-                     {getAcronym(song.artistName ?? '')} - {getAcronym(song.title ?? '')}
+                     {getFirstWordsAndAcronym(song.artistName ?? '')} - {getFirstWordsAndAcronym(song.title ?? '')}
                 </a>
                 <ul>
                     <li>
