@@ -9,15 +9,16 @@
 {#if $currentSongs.length > 0}
 <div id="songs-view">
     <ul>
-        <li>Load Images <input type="checkbox" name="loadImages" id="" bind:checked={loadImages}></li>
+        <li>{$currentSongs.length} songs - Load Images <input type="checkbox" name="loadImages" id="" bind:checked={loadImages}></li>
         {#each $currentSongs as song}
             <li>
                 {#if loadImages}
-                    <img src="{song.imageURL}" width="50px" alt="">
+                    <img src="{song.imageURL}" width="50px" alt="" >
                 {/if}
                 <a href="https://lnbeats.com/album/{song.feedGuid}" target="_blank" title="{song.artistName} - {song.title}">
                      {getFirstWordsAndAcronym(song.artistName ?? '')} - {getFirstWordsAndAcronym(song.title ?? '')}
-                </a>
+                </a> | 
+                <a href="{song.mp3URL}" title="Link to mp3 file">⬇️</a>
                 <ul>
                     <li>
                         <TagsView song={song} />

@@ -20,7 +20,7 @@
             }
         }
         if (tagstring.match(/[^a-zA-Z0-9, ]/g)) {
-            alert("Tags can only contain letters and spaces and must be seperated by a comma");
+            alert("Tags can only contain letters, numbers, spaces and must be seperated by a comma\n example: rock, pop, 50s, demu");
             return;
         }
         edting = false;

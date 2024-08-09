@@ -15,7 +15,7 @@
     }
 </script>
 
-<h2>All Tags</h2>
+<h2>All Tags ({tags.length})</h2>
 <div id="tagcloud">
     {#each tags as tag, i}
         <a href={'#'} on:click={() => getTags(tag)} >{tag}</a>
