@@ -4,12 +4,12 @@
     import { currentSongs } from "$lib/stores.js";
     import SongsView from '$lib/SongsView.svelte';
     import { onMount } from "svelte";
+
     let searchTerm = "Prismind";
     let albums: Feed[] = [];
     let album : Feed = {};
     let loadImages: boolean = false;
     
-
     onMount(() => {
         $currentSongs = [];
     })
@@ -27,13 +27,10 @@
         if (album.podcastGuid) {
             $currentSongs = await getSongsByFeedGuid(album.podcastGuid);
             console.log("currentAlbum: ", $currentSongs);
-            
         } else {
         // handle the case where podcastGuid is undefined
         }
     }
-
-
 </script>
 
 <div id="search-box">
