@@ -4,7 +4,6 @@
     export let song:SongFromTagAPI;
     let edting:boolean = false;
     let tagstring:string = '';
-    
 
     function editTags() {
         edting = true;
@@ -60,7 +59,7 @@
         <input type="text" bind:value={tagstring}>
         <button on:click={() => doneEditing(false)}>This Song</button> | 
         <button on:click={() => doneEditing(true)}>Whole Album</button>
-        <a href={"#"} on:click={() => edting = false}>Cancel</a>
+        <a href={"#"} on:click|preventDefault={() => edting = false}>Cancel</a>
     </li>
 {/if}
 
