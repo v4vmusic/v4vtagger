@@ -9,6 +9,7 @@ export async function getAllTags(): Promise<string[]> {
     return data
 }
 
+
 export async function getTagsByGuids(feedGuid: string, episodeGuid: string): Promise<SongFromTagAPI[]> {
     const endpoint = baseUrl + "items/byGuid/" + feedGuid + "/" + episodeGuid;
     let tags: string[] = [];
@@ -18,6 +19,7 @@ export async function getTagsByGuids(feedGuid: string, episodeGuid: string): Pro
     const data = await response.json();
     return tags = data.tags;
 }
+
 
 export async function getSongsByTag(tag: string): Promise<SongFromTagAPI[]> {
     const endpoint = baseUrl + "items/byTag/" + tag;
@@ -29,6 +31,7 @@ export async function getSongsByTag(tag: string): Promise<SongFromTagAPI[]> {
     return songs = data;
 }
 
+
 export async function getSongsByFeedGuid(feedGuid: string): Promise<SongFromTagAPI[]> {
     const endpoint = baseUrl + "items/byGuid/" + feedGuid;
     console.log("endpoint: " + endpoint);
@@ -38,7 +41,9 @@ export async function getSongsByFeedGuid(feedGuid: string): Promise<SongFromTagA
     return data;
 }
 
+
 export async function patchTagsByGuids(feedGuid: string, episodeGuid: string, tags: string[]): Promise<void> {
+    tags = sanitizeTags(tags);
     const endpoint = baseUrl + "items/addtags/" + feedGuid + "/" + episodeGuid;
     console.log("endpoint: " + endpoint);
     const response = await axios.patch(endpoint, {
@@ -50,6 +55,7 @@ export async function patchTagsByGuids(feedGuid: string, episodeGuid: string, ta
 
 
 export async function patchTagsByFeedGuid(feedGuid: string, tags: string[]): Promise<void> {
+    tags = sanitizeTags(tags);
     const endpoint = baseUrl + "items/addtagsbyfeedguid/" + feedGuid;
     // use axios to patch the tags
     const response = await axios.patch(endpoint, {
@@ -58,6 +64,38 @@ export async function patchTagsByFeedGuid(feedGuid: string, tags: string[]): Pro
     const data = await response.data;
     console.log(data);
 }
+
+
+export function sanitizeTags(tags: string[]): string[] {
+    const out: string[] = [];
+    for (let i = 0; i < tags.length; i++) {
+        if (tags[i].length > 0) {
+            out.push(tags[i].toLowerCase());
+            // remove any characters that are not letters, numbers, or spaces
+            out[i] = out[i].replace(/[^a-zA-Z0-9\s]/g, '');
+            // trim the string 
+            out[i] = out[i].trim();
+        }
+    }
+
+    // remove duplicates
+    const seen: { [key: string]: boolean } = {};
+    for (let i = 0; i < out.length; i++) {
+        if (!seen[out[i]]) {
+            seen[out[i]] = true;
+        } else {
+            out.splice(i, 1);
+            i--;
+        }
+    }
+
+
+
+
+
+    return out;
+}
+
 
 export interface SongFromTagAPI {
     _id?: string;
