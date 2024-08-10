@@ -49,7 +49,7 @@
                     {#if loadImages}
                         <img src="{album.artwork}" width="75px" alt="">
                     {/if}
-                    <a href={'#'} on:click={() => getSongsFromAlbum(album)} title="{album.author} - {album.title}">{album.author?.substring(0, 30)} - {album.title?.substring(0, 30)} - ({album.episodeCount})</a></li>
+                    <a href={'#'} on:click|preventDefault={() => getSongsFromAlbum(album)} title="{album.author} - {album.title}">{album.author?.substring(0, 30)} - {album.title?.substring(0, 30)} - ({album.episodeCount})</a></li>
             {/each}
         </ul>
 

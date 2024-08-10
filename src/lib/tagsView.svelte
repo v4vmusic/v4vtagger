@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type SongFromTagAPI, patchTagsByFeedGuid, patchTagsByGuids, getSongsByTag } from './apis/tagsapi.ts';
+    import { type SongFromTagAPI, patchTagsByFeedGuid, patchTagsByGuids, getSongsByTag, getSongsByGuids } from './apis/tagsapi.ts';
     import { currentSongs } from "$lib/stores.js";
     export let song:SongFromTagAPI;
     let edting:boolean = false;
@@ -10,7 +10,7 @@
         edting = true;
         tagstring = song.tags?.join(', ') || '';
     }
-    function doneEditing(wholeAlbum:boolean) {
+    async function doneEditing(wholeAlbum:boolean) {
         if (wholeAlbum){
             if (confirm("Are you sure?\nThis will update every song on the album with these tags, There is no undo.")) {
                 // update tags for whole album
@@ -26,18 +26,18 @@
         edting = false;
         song.tags = tagstring.toLowerCase().split(', ');
         //TODO: handle cases like "a,b" and "a , b"
-        upateAPI(wholeAlbum);
+        await upateAPI(wholeAlbum);
     }
 
-    function upateAPI(wholeAlbum:boolean) {
+    async function upateAPI(wholeAlbum:boolean) {
         console.log("wholeAlbum: ", wholeAlbum);
         
         if (wholeAlbum) {
             console.log("Updating tags for whole album ", song.feedGuid);
-            patchTagsByFeedGuid(song.feedGuid ?? '', song.tags ?? []);
+            await patchTagsByFeedGuid(song.feedGuid ?? '', song.tags ?? []);
         }else {
             console.log("Updating tags for this song ", song.title);
-            patchTagsByGuids(song.feedGuid ?? '', song.itemGuid ?? '', song.tags ?? []);
+            await patchTagsByGuids(song.feedGuid ?? '', song.itemGuid ?? '', song.tags ?? []);
         }
     }
     async function getTags(tag: string) {
@@ -48,7 +48,7 @@
 {#if !edting}
     {#if Array.isArray(song.tags) && song.tags.length > 0}
             {#each song.tags as tag, i}
-                <a href={'#'} on:click={() => getTags(tag)} >{tag}</a>
+                <a href={'#'} on:click|preventDefault={() => getTags(tag)} >{tag}</a>
                 {#if i < (song.tags.length - 1)}&nbsp-&nbsp{/if}
             {/each}
             <li><button on:click={editTags}>Edit</button></li>

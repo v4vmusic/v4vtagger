@@ -41,6 +41,15 @@ export async function getSongsByFeedGuid(feedGuid: string): Promise<SongFromTagA
     return data;
 }
 
+export async function getSongsByGuids(feedGuid: string, episodeGuid: string): Promise<SongFromTagAPI[]> {
+    const endpoint = baseUrl + "items/byGuid/" + feedGuid + "/" + episodeGuid;
+    console.log("endpoint: " + endpoint);
+    const response = await fetch(endpoint, { mode: "cors" });
+    const data: SongFromTagAPI[] = await response.json();
+    // console.log("SongsByGuids: " + JSON.stringify(data));
+    return data;
+}
+
 
 export async function patchTagsByGuids(feedGuid: string, episodeGuid: string, tags: string[]): Promise<void> {
     tags = sanitizeTags(tags);
